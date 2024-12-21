@@ -1,4 +1,4 @@
-torch
-pandas
-streamlit
-other-libraries-you-are-using
+torch==2.1.0   # or another compatible version
+pandas==1.5.3
+streamlit==1.21.0
+numpy==1.23.4
