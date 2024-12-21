@@ -1,4 +1,4 @@
-# Research-Papers-Recommendation-System-and-Subject-Area-Prediction-Using-Deep-Learning-and-LLMS
+# Research Papers Recommendation System and Subject Area Prediction Using Deep Learning and LLMS
 # Overview
 This repository hosts a machine learning project that encompasses two key functionalities: a research papers recommendation system and subject area prediction. The goal of the project is to provide users with tailored recommendations based on their preferences and to predict the subject area of research papers.
 
