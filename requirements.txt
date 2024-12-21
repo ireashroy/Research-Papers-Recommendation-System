@@ -1,8 +1,7 @@
-pip install tensorflow==2.15.0
-pip install torch==2.0.1
-pip install sentence_transformers==2.2.2
-pip install streamlit
-pip install scikit-learn
-pip install pandas
-pip install matplotlib
-pip install pickle
+tensorflow==2.15.0
+torch==2.0.1
+sentence_transformers==2.2.2
+streamlit==1.24.0
+numpy==1.23.4
+pickle5==0.0.11
+keras==2.15.0
