@@ -3,40 +3,32 @@
 # pip install sentence_transformers==2.2.2
 # pip install streamlit
 
-# import libraries===================================
+# import necessary libraries
 import streamlit as st
 import torch
-from sentence_transformers import util
+from sentence_transformers import SentenceTransformer, util
 import pickle
 from tensorflow.keras.layers import TextVectorization
 import numpy as np
 from tensorflow import keras
 
-# load save recommendation models===================================
-
+# Load saved recommendation models
 embeddings = pickle.load(open('models/embeddings.pkl','rb'))
 sentences = pickle.load(open('models/sentences.pkl','rb'))
 rec_model = pickle.load(open('models/rec_model.pkl','rb'))
 
-# load save prediction models============================
-# Load the model
+# Load saved prediction models
 loaded_model = keras.models.load_model("models/model.h5")
-# Load the configuration of the text vectorizer
 with open("models/text_vectorizer_config.pkl", "rb") as f:
     saved_text_vectorizer_config = pickle.load(f)
-# Create a new TextVectorization layer with the saved configuration
 loaded_text_vectorizer = TextVectorization.from_config(saved_text_vectorizer_config)
-# Load the saved weights into the new TextVectorization layer
 with open("models/text_vectorizer_weights.pkl", "rb") as f:
     weights = pickle.load(f)
     loaded_text_vectorizer.set_weights(weights)
-
-# Load the vocabulary
 with open("models/vocab.pkl", "rb") as f:
     loaded_vocab = pickle.load(f)
 
-
-# custom functions====================================
+# Custom functions for recommendation
 def recommendation(input_paper):
     # Calculate cosine similarity scores between the embeddings of input_paper and all papers in the dataset.
     cosine_scores = util.cos_sim(embeddings, rec_model.encode(input_paper))
@@ -51,8 +43,7 @@ def recommendation(input_paper):
 
     return papers_list
 
-
-#=======subject area prediction funtions=================
+# Functions for subject area prediction
 def invert_multi_hot(encoded_labels):
     """Reverse a single multi-hot encoded label to a tuple of vocab terms."""
     hot_indices = np.argwhere(encoded_labels == 1.0)[..., 0]
@@ -70,20 +61,27 @@ def predict_category(abstract, model, vectorizer, label_lookup):
 
     return predicted_labels
 
-# create app=========================================
+# Create Streamlit app interface
 st.title('Research Papers Recommendation and Subject Area Prediction App')
-st.write("LLM and Deep Learning Base App")
+st.write("LLM and Deep Learning Based App")
 
-input_paper = st.text_input("Enter Paper title.....")
-new_abstract = st.text_area("Past paper abstract....")
+# Input for paper title and abstract
+input_paper = st.text_input("Enter Paper Title...")
+new_abstract = st.text_area("Paste Paper Abstract...")
+
+# Recommendation button
 if st.button("Recommend"):
-    # recommendation part
-    recommend_papers = recommendation(input_paper)
-    st.subheader("Recommended Papers")
-    st.write(recommend_papers)
+    if input_paper and new_abstract:
+        # Recommendation part
+        recommend_papers = recommendation(input_paper)
+        st.subheader("Recommended Papers")
+        for paper in recommend_papers:
+            st.write(paper)
 
-    #========prediction part
-    st.write("===================================================================")
-    predicted_categories = predict_category(new_abstract, loaded_model, loaded_text_vectorizer, invert_multi_hot)
-    st.subheader("Predicted Subject area")
-    st.write(predicted_categories)
+        # Subject area prediction part
+        st.write("===================================================================")
+        predicted_categories = predict_category(new_abstract, loaded_model, loaded_text_vectorizer, invert_multi_hot)
+        st.subheader("Predicted Subject Areas")
+        st.write(predicted_categories)
+    else:
+        st.error("Please enter both paper title and abstract.")
