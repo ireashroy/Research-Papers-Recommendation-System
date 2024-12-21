@@ -5,5 +5,9 @@ sentence-transformers==2.2.2
 scikit-learn==1.2.0
 matplotlib==3.7.1
 pandas==1.5.3
-numpy==1.24.1
+numpy==1.26.4  # Update to a version compatible with tensorflow 2.16.1
 pickle5==0.0.12
+
+# Additional dependencies to avoid 'distutils' error
+setuptools==65.5.0
+wheel==0.38.4
