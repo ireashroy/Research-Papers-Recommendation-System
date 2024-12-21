@@ -1,4 +1,4 @@
-torch==2.1.0   # or another compatible version
+torch==2.2.0
 pandas==1.5.3
 streamlit==1.21.0
 numpy==1.23.4
