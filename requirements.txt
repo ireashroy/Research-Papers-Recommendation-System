@@ -1,13 +1,4 @@
-streamlit==1.23.0
-tensorflow==2.16.1
-torch==2.2.0
-sentence-transformers==2.2.2
-scikit-learn==1.2.0
-matplotlib==3.7.1
-pandas==1.5.3
-numpy==1.26.4  # Update to a version compatible with tensorflow 2.16.1
-pickle5==0.0.12
-
-# Additional dependencies to avoid 'distutils' error
-setuptools==65.5.0
-wheel==0.38.4
+pip install tensorflow==2.15.0
+pip install torch==2.0.1
+pip install sentence_transformers==2.2.2
+pip install streamlit
